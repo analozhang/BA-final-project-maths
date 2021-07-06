@@ -26,7 +26,7 @@ summary(m.ex)
 m.ar1 <- geeglm(symptom ~ month + age + gender + monthxage + monthxgender, data=madras_df, id=id, family=binomial, corstr="ar1")
 summary(m.ar1)
 
-#Criterios de selección de la matriz de correlación de trabajo
+#Criterios de selecciÃ³n de la matriz de correlaciÃ³n de trabajo
 #QIC y CIC
 QIC(m.ind)[c(1,4)]
 QIC(m.ex)[c(1,4)]
