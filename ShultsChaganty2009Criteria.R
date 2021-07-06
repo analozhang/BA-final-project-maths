@@ -1,4 +1,4 @@
-### MATRICES DE CORRELACIÓN DE TRABAJO
+### MATRICES DE CORRELACIÃ“N DE TRABAJO
 
 #Intercambiable
 exc_cor <- function(n,rho){
@@ -24,7 +24,7 @@ ar1_cor <- function(n, rho){
 shults_chaganty <- function(estructura,modelo,dataset){
   datos=as.matrix.data.frame(dataset)
   p=ncol(datos)
-  #Creo 3 columnas que serán: mu, S=y-mu, varianza=mu(1-mu)
+  #Creo 3 columnas que serÃ¡n: mu, S=y-mu, varianza=mu(1-mu)
   #mu
   mu=modelo$fitted.values 
   datos=cbind(datos,mu)
@@ -41,12 +41,12 @@ shults_chaganty <- function(estructura,modelo,dataset){
   id=unique(datos[,1]) #individuos (id tiene que estar en la columna 1 del dataset)
   
   SC_individuo=rep(0,times=max(id))
-  m=p+3 #número de columnas de la nueva tabla
+  m=p+3 #nÃºmero de columnas de la nueva tabla
   
   alpha=modelo$geese$alpha
   
   for (i in id){
-    matriz_individuo = datos[datos[,1]==i,] #en cada iteración, coge los datos del individuo i
+    matriz_individuo = datos[datos[,1]==i,] #en cada iteraciÃ³n, coge los datos del individuo i
     t=nrow(matriz_individuo)
     #Determinar S
     S_trans=matrix(c(matriz_individuo[,m-1]),nrow=1) #matriz 1xt
