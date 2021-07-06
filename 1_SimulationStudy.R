@@ -16,10 +16,10 @@ for (i in 1:length(tiempos)){
 mu2=exp(log_ods_2)/(1+exp(log_ods_2))
 
 
-### FUNCIÓN AUXILIAR: convierte las muestras obtenidas en algoritmo_park_final en formato de datos de panel
+### FUNCIÃ“N AUXILIAR: convierte las muestras obtenidas en algoritmo_park_final en formato de datos de panel
 datos_correlacionados <- function(mu1,mu2,corr,n1,n2){
   t=length(tiempos)
-  filas=(n1+n2)*t #número de muestras
+  filas=(n1+n2)*t #nÃºmero de muestras
   datos_correlacionados=matrix(0,nrow=filas,ncol=4) #4 columnas: id, y, visita, grupo
   #GRUPO 1
   muestra_grupo1=algoritmo_park_final(mu1,corr,10000,n1) #m=10000 iteraciones para simular las X
@@ -42,13 +42,13 @@ datos_correlacionados <- function(mu1,mu2,corr,n1,n2){
 }
 
 library(geepack)
-### FUNCIÓN PRINCIPAL
+### FUNCIÃ“N PRINCIPAL
 simulacion <- function(mu1,mu2,n1,n2,alpha,corstr,iteraciones){
   #Matriz ECM de betas
   matriz_ECM_ind=matrix(nrow=iteraciones,ncol=4) #4 columnas porque hay 4 betas
   matriz_ECM_gee=matrix(nrow=iteraciones,ncol=4)
   
-  #Matriz error estándar de betas
+  #Matriz error estÃ¡ndar de betas
   matriz_error_ind=matrix(nrow=iteraciones,ncol=4)
   matriz_error_gee=matrix(nrow=iteraciones,ncol=4)
   
@@ -69,7 +69,7 @@ simulacion <- function(mu1,mu2,n1,n2,alpha,corstr,iteraciones){
     matriz_error_gee[i,]=(summary(modelo_gee)$coef[,2])
   }
   
-  #Función que detecta NaN
+  #FunciÃ³n que detecta NaN
   id_sin_NaN <- function(matriz){
     id_sin_NaN=c()
     for (i in 1:nrow(matriz)){
@@ -78,7 +78,7 @@ simulacion <- function(mu1,mu2,n1,n2,alpha,corstr,iteraciones){
     return(id_sin_NaN)
   }
   
-  #Identifico las filas sin NaN en el error estándar
+  #Identifico las filas sin NaN en el error estÃ¡ndar
   id_ind = id_sin_NaN(matriz_error_ind)
   id_gee = id_sin_NaN(matriz_error_gee)
   conteo_NaN_id = iteraciones-length(id_ind)
@@ -94,7 +94,7 @@ simulacion <- function(mu1,mu2,n1,n2,alpha,corstr,iteraciones){
   ECM_ind=sqrt(apply(matriz_ECM_ind, 2, mean))
   ECM_gee=sqrt(apply(matriz_ECM_gee, 2, mean))
   
-  ##Promedio de error estándar
+  ##Promedio de error estÃ¡ndar
   Promedio_error_ind=apply(matriz_error_ind, 2, mean)
   Promedio_error_gee=apply(matriz_error_gee, 2, mean)
   
