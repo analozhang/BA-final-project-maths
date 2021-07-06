@@ -26,7 +26,7 @@ posicion <- function(valor,matriz){
   return (posicion)
 }
 
-minimo <- function(matriz){ #Devuelve el valor mÌnimo entre los elementos >0 de una matriz
+minimo <- function(matriz){ #Devuelve el valor m√≠nimo entre los elementos >0 de una matriz
   valores_positivos=matriz[matriz>0] #Tomo los valores positivos
   minimo=sort(valores_positivos)[1] #Los ordeno de menor a mayor y cojo el primero 
   return(minimo) 
@@ -53,10 +53,10 @@ permutaciones <- function(vector){ #Devuelve todas las permutaciones (con reempl
 }
 
 
-### FUNCI”N PRINCIPAL  
+### FUNCI√ìN PRINCIPAL  
 
 algoritmo_park_parte1 <- function(p,corr){
-  #En betas, S y matrices_alphas se almacenan los resultados en cada iteraciÛn l
+  #En betas, S y matrices_alphas se almacenan los resultados en cada iteraci√≥n l
   betas=c()
   S=list()
   matrices_alphas=list()
@@ -68,23 +68,23 @@ algoritmo_park_parte1 <- function(p,corr){
   while (sum(c(matriz_alpha)>0)){ #Mientras que todos los elementos de alpha sean distintos de 0
     
     #PASO 1: Determinar beta_l y S_l
-    alpha_minimo=minimo(matriz_alpha) #Es el mÌnimo alpha >0
+    alpha_minimo=minimo(matriz_alpha) #Es el m√≠nimo alpha >0
     betas=c(betas,alpha_minimo) #alpha_minimo se almacena en betas
-    posicion_beta=posicion(alpha_minimo,matriz_alpha) #Saco su posiciÛn en matriz_alpha
+    posicion_beta=posicion(alpha_minimo,matriz_alpha) #Saco su posici√≥n en matriz_alpha
     r=posicion_beta[1]
     s=posicion_beta[2]
     if (sum(matriz_alpha[r,r]==0|matriz_alpha[s,s]==0)>0){
       return(print("Se para el algoritmo"))
     }else{
       S_inicial=unique(c(r,s)) 
-      S_l=S_inicial #La posiciÛn de beta_l va al conjunto S_l
+      S_l=S_inicial #La posici√≥n de beta_l va al conjunto S_l
       for (k in 1:3){ #k=1,2,3 porque hemos hay 3 periodos de tiempo
-        cont=0 #Este contador +1 si alg˙n elemento es 0
-        long=length(S_l) #El tamaÒo de S_l es de 1 o 2
+        cont=0 #Este contador +1 si alg√∫n elemento es 0
+        long=length(S_l) #El tama√±o de S_l es de 1 o 2
         for (i in 1:long){
           if (matriz_alpha[i,k]==0){cont=cont+1} #Para cada k, se prueba con cada elemento de S_l -> Ver si en esa posicion es =0
         }
-        if (cont==0){S_l=union(S_l,k)} #Si ninguno de los valores observados es =0, entonces k se almacenar· en S_l (junto con S_inicial)
+        if (cont==0){S_l=union(S_l,k)} #Si ninguno de los valores observados es =0, entonces k se almacenar√° en S_l (junto con S_inicial)
       }
       S[[l]]=S_l #El conjunto S_l al final de la etapa se guarda en S
       
@@ -102,8 +102,8 @@ algoritmo_park_parte1 <- function(p,corr){
   return(list(betas,S,matrices_alphas))
 }
 
-algoritmo_park_parte2 <- function(p,corr,m){ #m es el n˙mero de variables Poisson de la simulaciÛn
-  #1a PARTE: Determinamos la distribuciÛn conjunta (Y1,Y2,Y3) en funciÛn de las X1,...,X6
+algoritmo_park_parte2 <- function(p,corr,m){ #m es el n√∫mero de variables Poisson de la simulaci√≥n
+  #1a PARTE: Determinamos la distribuci√≥n conjunta (Y1,Y2,Y3) en funci√≥n de las X1,...,X6
   Y1_indicesX=c()
   Y2_indicesX=c()
   Y3_indicesX=c()
@@ -130,7 +130,7 @@ algoritmo_park_parte2 <- function(p,corr,m){ #m es el n˙mero de variables Poisso
     Y1_valor=sum(poisson[Y1_indicesX])
     Y2_valor=sum(poisson[Y2_indicesX])
     Y3_valor=sum(poisson[Y3_indicesX])
-    #Zi es la funciÛn indicatriz de que Yi=0   
+    #Zi es la funci√≥n indicatriz de que Yi=0   
     Z_valor=c()
     if (Y1_valor==0){Z_valor[1]=1}else{Z_valor[1]=0}
     if (Y2_valor==0){Z_valor[2]=1}else{Z_valor[2]=0}
@@ -141,11 +141,11 @@ algoritmo_park_parte2 <- function(p,corr,m){ #m es el n˙mero de variables Poisso
   #3a PARTE: Calculamos las probabilidades de cada posible resultado de (Z1,Z2,Z3)
   posiciones=permutations(2,3,repeats.allowed=TRUE) #Las posiciones del vector a permutar
   vector=c(0,1)
-  resultados_Z=matrix(nrow=nrow(posiciones),ncol=3) #Ser· una matriz con todas las posibles combinaciones de Z
+  resultados_Z=matrix(nrow=nrow(posiciones),ncol=3) #Ser√° una matriz con todas las posibles combinaciones de Z
   for (i in 1:nrow(posiciones)){ 
     resultados_Z[i,]=c(vector[posiciones[i,1]],vector[posiciones[i,2]],vector[posiciones[i,3]])
   }
-  resultados_Z=cbind(resultados_Z,rep(0,times=nrow(resultados_Z))) #AÒado una columna donde se ir·n contando las frecuencias
+  resultados_Z=cbind(resultados_Z,rep(0,times=nrow(resultados_Z))) #A√±ado una columna donde se ir√°n contando las frecuencias
   
   for (i in 1:nrow(Z)){
     for (j in 1:nrow(resultados_Z)){
@@ -154,7 +154,7 @@ algoritmo_park_parte2 <- function(p,corr,m){ #m es el n˙mero de variables Poisso
       }
     }
   }
-  resultados_Z[,4]=resultados_Z[,4]/m #prob=frecuencia/tamaÒo muestra total
+  resultados_Z[,4]=resultados_Z[,4]/m #prob=frecuencia/tama√±o muestra total
   
   prob=resultados_Z[,4]
   prob_acumuladas=c(prob[1])
@@ -188,7 +188,7 @@ algoritmo_park_final <- function(p,corr,m,n){
 
 ### Datos del paper de Park para comprobar
 
-# Matriz de correlaciÛn desestructurada para t=3
+# Matriz de correlaci√≥n desestructurada para t=3
 uns_corr <- function(a12,a13,a23){
   corr = matrix(c(1,a12,a13,a12,1,a23,a13,a23,1),nrow=3,ncol=3)
   return(corr)
